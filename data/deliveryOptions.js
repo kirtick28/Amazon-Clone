@@ -28,6 +28,20 @@ export function getDeliveryOption(id){
     return matchingOption;
 }
 
+function isWeekend(date){
+    return date.format('dddd') == 'Sunday' || date.format('dddd') == "Saturday";
+}
+
 export function calculateDeliveryDate(deliveryOption){
-    return dayjs().add(deliveryOption.deliveryDays,'days').format('dddd, MMMM D')
+    let date = dayjs();
+    let numberOfDays = deliveryOption.deliveryDays;
+    let i=0;
+    while(i<numberOfDays){
+        date = date.add(1,'days');
+        if(isWeekend(date)){
+            continue;
+        }
+        i+=1;
+    }
+    return date.format('dddd, MMMM D');
 }

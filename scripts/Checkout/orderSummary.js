@@ -108,6 +108,7 @@ export function renderOrderSummary(){
             document.querySelector(`.js-product-quantity-${productId}`).
             classList.remove('js-product-quantity');
         }
+        renderOrderSummary();
         renderCheckoutHeader();
         renderPaymentSummary();
     }
