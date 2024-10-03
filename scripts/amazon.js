@@ -1,6 +1,5 @@
 import { products } from "../data/products.js";
 import { addToCart, calculateCartQuantity } from "../data/cart.js";
-import { formatCurrency } from "./utils/money.js";
 
 let amazonHtml = '';
 const prevAddedTimers = {};
@@ -19,14 +18,14 @@ products.forEach((product) => {
 
             <div class="product-rating-container">
             <img class="product-rating-stars"
-                src="images/ratings/rating-${product.rating.stars*10}.png">
+                src=${product.getStarsURl()}>
             <div class="product-rating-count link-primary">
-                ${product.rating.count}
+                ${product.getRatingCount()}
             </div>
             </div>
 
             <div class="product-price">
-            $${formatCurrency(product.priceCents)}
+            ${product.getPrice()}
             </div>
 
             <div class="product-quantity-container">
