@@ -1,10 +1,10 @@
-import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { cart, removeFromCart, updateCartQuantity, updateDeliveryOptionId} from '../../data/cart.js';
 import { getProduct } from '../../data/products.js';
 import { getDeliveryOption , deliveryOptions} from '../../data/deliveryOptions.js';
 import { formatCurrency } from '../utils/money.js';
 import { renderPaymentSummary } from './paymentSummary.js';
 import { renderCheckoutHeader } from './checkoutHeader.js';
+import { calculateDeliveryDate } from '../../data/deliveryOptions.js';
 
 export function renderOrderSummary(){
     let checkoutHtml = '';
@@ -16,7 +16,7 @@ export function renderOrderSummary(){
         checkoutHtml += `
         <div class="cart-item-container js-cart-item-container-${productId}">
             <div class="delivery-date">
-                Delivery date: ${dayjs().add(matchingOption.deliveryDays,'days').format('dddd, MMMM D')}
+                Delivery date: ${calculateDeliveryDate(matchingOption)}
             </div>
 
             <div class="cart-item-details-grid">
@@ -116,10 +116,9 @@ export function renderOrderSummary(){
 
     function addOptions(productId,cartItem){
         let deliveryHtml = '';
-        const today = dayjs();
         deliveryOptions.forEach((option)=>{
             const price = option.priceCents == 0 ? 'FREE' : `$${formatCurrency(option.priceCents)} -`;
-            const deliveryDate = today.add(option.deliveryDays, 'days').format('dddd, MMMM D');
+            const deliveryDate = calculateDeliveryDate(option);
             const isChecked = cartItem.deliveryOptionId == option.id ? 'checked' : '';
             deliveryHtml += `
             <div class="delivery-option js-delivery-option" data-product-id=${productId} data-delivery-option-id=${option.id}>
