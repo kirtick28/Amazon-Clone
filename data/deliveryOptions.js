@@ -1,4 +1,4 @@
-deliveryOptions = [
+let deliveryOptions = [
     {
         id : 1,
         deliveryDays : 7,
@@ -14,4 +14,14 @@ deliveryOptions = [
         deliveryDays : 1,
         priceCents : 999
     }
-]
+];
+
+function getDeliveryOption(id){
+    let matchingOption;
+    deliveryOptions.forEach(option => {
+        if(option.id == id){
+            matchingOption = option;
+        }
+    });
+    return matchingOption;
+}
