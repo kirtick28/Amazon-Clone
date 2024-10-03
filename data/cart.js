@@ -10,6 +10,7 @@ function findItem(productId){
     return matchingProduct;
 }
 function addToCart(productId){
+    const deliveryOptionId = 1;
     const quantity = Number(document.querySelector(`.js-product-quantity-${productId}`).value);
     let matchingProduct = findItem(productId);
     if(matchingProduct){
@@ -18,10 +19,11 @@ function addToCart(productId){
     else{
         cart.push({
             productId,
-            quantity
+            quantity,
+            deliveryOptionId
         });
     }
-    console.log(cart);
+    saveToLocal();
 }
 
 function saveToLocal(){
@@ -52,5 +54,11 @@ function removeFromCart(productId){
 function updateCartQuantity(productId, newQuantity){
     const matchingProduct = findItem(productId);
     matchingProduct.quantity = newQuantity;
+    saveToLocal();
+}
+
+function updateDeliveryOptionId(productId,deliveryOptionId){
+    const matchingProduct = findItem(productId);
+    matchingProduct.deliveryOptionId = deliveryOptionId;
     saveToLocal();
 }
