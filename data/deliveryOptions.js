@@ -1,4 +1,4 @@
-let deliveryOptions = [
+export let deliveryOptions = [
     {
         id : 1,
         deliveryDays : 7,
@@ -16,7 +16,7 @@ let deliveryOptions = [
     }
 ];
 
-function getDeliveryOption(id){
+export function getDeliveryOption(id){
     let matchingOption;
     deliveryOptions.forEach(option => {
         if(option.id == id){

@@ -1,4 +1,8 @@
-amazonHtml = '';
+import { products } from "../data/products.js";
+import { addToCart, calculateCartQuantity } from "../data/cart.js";
+import { formatCurrency } from "./utils/money.js";
+
+let amazonHtml = '';
 const prevAddedTimers = {};
 
 products.forEach((product) => {
@@ -22,7 +26,7 @@ products.forEach((product) => {
             </div>
 
             <div class="product-price">
-            $${product.priceCents/100}
+            $${formatCurrency(product.priceCents)}
             </div>
 
             <div class="product-quantity-container">
