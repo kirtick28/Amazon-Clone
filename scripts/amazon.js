@@ -1,5 +1,5 @@
 import { products } from "../data/products.js";
-import { addToCart, calculateCartQuantity } from "../data/cart.js";
+import { cart } from "../data/cart-class.js";
 
 let amazonHtml = '';
 const prevAddedTimers = {};
@@ -66,9 +66,9 @@ document.querySelectorAll('.js-add-to-cart')
     button.addEventListener("click", () =>{
         const productId = button.dataset.productId;
         displayAdded(productId);
-        addToCart(productId);
+        cart.addToCart(productId);
         updateCartQuantity();
-        saveToLocal();
+        cart.saveToLocal();
     })
 })
 
@@ -86,7 +86,7 @@ function displayAdded(productId){
 }
 
 function updateCartQuantity(){  
-    document.querySelector('.cart-quantity').innerHTML = calculateCartQuantity();
+    document.querySelector('.cart-quantity').innerHTML = cart.calculateCartQuantity();
 }
 
 updateCartQuantity();

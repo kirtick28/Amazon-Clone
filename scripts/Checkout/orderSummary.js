@@ -1,4 +1,4 @@
-import { cart, removeFromCart, updateCartQuantity, updateDeliveryOptionId} from '../../data/cart.js';
+import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
 import { getDeliveryOption , deliveryOptions} from '../../data/deliveryOptions.js';
 import { formatCurrency } from '../utils/money.js';
@@ -9,7 +9,7 @@ import { calculateDeliveryDate } from '../../data/deliveryOptions.js';
 export function renderOrderSummary(){
     let checkoutHtml = '';
 
-    cart.forEach(cartItem => {
+    cart.cartItems.forEach(cartItem => {
         const productId = cartItem.productId;
         const matchingProduct = getProduct(productId);
         const matchingOption = getDeliveryOption(cartItem.deliveryOptionId);
@@ -64,7 +64,7 @@ export function renderOrderSummary(){
     .forEach(button =>{
         button.addEventListener("click",() => {
             const productId = button.dataset.productId;
-            removeFromCart(productId);
+            cart.removeFromCart(productId);
             renderOrderSummary();
             renderPaymentSummary();
         })
@@ -99,11 +99,11 @@ export function renderOrderSummary(){
     function handleSaveQuantity(productId){
         const newQuantity = Number(document.querySelector(`.input-quantity-${productId}`).value);
         if(newQuantity<=0){
-            removeFromCart(productId);
+            cart.removeFromCart(productId);
             document.querySelector(`.js-cart-item-container-${productId}`).remove();
         }
         else{
-            updateCartQuantity(productId,newQuantity);
+            cart.updateCartQuantity(productId,newQuantity);
             document.querySelector(`.quantity-label-${productId}`).innerHTML = newQuantity;
             document.querySelector(`.js-product-quantity-${productId}`).
             classList.remove('js-product-quantity');
@@ -144,7 +144,7 @@ export function renderOrderSummary(){
     .forEach((shippingOption)=>{
         shippingOption.addEventListener("click", ()=>{
             const {productId,deliveryOptionId} = shippingOption.dataset;
-            updateDeliveryOptionId(productId,deliveryOptionId);
+            cart.updateDeliveryOptionId(productId,deliveryOptionId);
             renderOrderSummary();
             renderPaymentSummary();
         });

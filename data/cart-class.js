@@ -67,5 +67,4 @@ class Cart{
     }
 }
 
-const cart = new Cart('cart-oop');
-console.log(cart);
+export const cart = new Cart('cart-oop');
