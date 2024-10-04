@@ -1,5 +1,6 @@
 import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 
+// List of Delivery Options
 export let deliveryOptions = [
     {
         id : 1,
@@ -18,6 +19,8 @@ export let deliveryOptions = [
     }
 ];
 
+
+// Used to return the matching Delivery Option using the Delivery Id
 export function getDeliveryOption(id){
     let matchingOption;
     deliveryOptions.forEach(option => {
@@ -28,10 +31,12 @@ export function getDeliveryOption(id){
     return matchingOption;
 }
 
+// Checks the date is weekend or not
 function isWeekend(date){
     return date.format('dddd') == 'Sunday' || date.format('dddd') == "Saturday";
 }
 
+// Calculates the Delivery Date according to the delivery Option
 export function calculateDeliveryDate(deliveryOption){
     let date = dayjs();
     let numberOfDays = deliveryOption.deliveryDays;

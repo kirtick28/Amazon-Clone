@@ -1,16 +1,24 @@
 class Cart{
-    cartItems;
-    #localStorageKey;
+    cartItems;         // Public
+    #localStorageKey;  // Private
+
+    // Constructor which initializes the value of localStorageKey and calls the private method loadFromStorage
     constructor(localStorageKey){
         this.#localStorageKey=localStorageKey;
         this.#loadFromStorage();   
     }
-    #loadFromStorage(){
+    
+    // Loads the data stored in local storage to the cartItems(list) at the time of creation of object 
+    #loadFromStorage(){     //Private Method
         this.cartItems = JSON.parse(localStorage.getItem(this.#localStorageKey)) || [];
     }
+    
+    // Used to save the data to the local storage
     saveToLocal(){
         localStorage.setItem(this.#localStorageKey,JSON.stringify(this.cartItems));
     }
+
+    // Finds and returns the matching product in the cart by its productId
     findItem(productId){
         let matchingProduct;
         this.cartItems.forEach(cartItem => {
@@ -20,6 +28,8 @@ class Cart{
         })
         return matchingProduct;
     }
+
+    // Adds the selected product to the cart or updates its quantity if it already exists
     addToCart(productId){
         const deliveryOptionId = 1;
         const quantity = Number(document.querySelector(`.js-product-quantity-${productId}`).value);
@@ -36,6 +46,8 @@ class Cart{
         }
         this.saveToLocal();
     }
+
+    // Calculates the total quantity of items in the cart
     calculateCartQuantity(){
         let quantity = 0;
         this.cartItems.forEach((cartItem)=>{
@@ -43,6 +55,8 @@ class Cart{
         })
         return quantity;
     }
+
+    // Removes the product from the cart based on its productId
     removeFromCart(productId){
         let ind = -1;
         this.cartItems.forEach((cartItem,index) =>{
@@ -55,11 +69,15 @@ class Cart{
         }
         this.saveToLocal();
     }
+
+    // Updates the quantity of a specific product in the cart
     updateCartQuantity(productId, newQuantity){
         const matchingProduct = this.findItem(productId);
         matchingProduct.quantity = newQuantity;
         this.saveToLocal();
     }
+
+    // Updates the delivery option for the specified product
     updateDeliveryOptionId(productId,deliveryOptionId){
         const matchingProduct = this.findItem(productId);
         matchingProduct.deliveryOptionId = deliveryOptionId;
@@ -67,4 +85,5 @@ class Cart{
     }
 }
 
+//New cart which holds the cart Items and its methods
 export const cart = new Cart('cart-oop');

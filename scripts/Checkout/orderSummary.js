@@ -9,6 +9,7 @@ import { calculateDeliveryDate } from '../../data/deliveryOptions.js';
 export function renderOrderSummary(){
     let checkoutHtml = '';
 
+    // Generating Html for cartItems that should be checkout
     cart.cartItems.forEach(cartItem => {
         const productId = cartItem.productId;
         const matchingProduct = getProduct(productId);
@@ -60,6 +61,7 @@ export function renderOrderSummary(){
 
     document.querySelector('.order-summary').innerHTML = checkoutHtml;
 
+    // Adding event listener to delete link in each cartItem
     document.querySelectorAll('.js-delete-link')
     .forEach(button =>{
         button.addEventListener("click",() => {
@@ -70,6 +72,7 @@ export function renderOrderSummary(){
         })
     })
 
+    // Adding event listener to update link in each cartItem
     document.querySelectorAll('.js-update-link')
     .forEach((link)=>{
         link.addEventListener("click", () =>{
@@ -79,6 +82,8 @@ export function renderOrderSummary(){
             renderPaymentSummary();
         })
     })
+
+    // Adding event listener to save link in each cartItem
     document.querySelectorAll('.js-save-link')
     .forEach((link)=>{
         link.addEventListener("click", () =>{
@@ -87,6 +92,7 @@ export function renderOrderSummary(){
         })
     })
 
+    // Adding event listener to input quantity box in each cartItem
     document.querySelectorAll('.input-quantity')
     .forEach((input) =>{
         input.addEventListener('keyup', (event)=>{
@@ -96,6 +102,7 @@ export function renderOrderSummary(){
         })
     })
 
+    // Handles the process of saving the quantity to the cart when we click save and also renders the whole checkout page once
     function handleSaveQuantity(productId){
         const newQuantity = Number(document.querySelector(`.input-quantity-${productId}`).value);
         if(newQuantity<=0){
@@ -115,6 +122,7 @@ export function renderOrderSummary(){
 
     renderCheckoutHeader();
 
+    // Used to generate the html for delivery options and also setting the real-time date
     function addOptions(productId,cartItem){
         let deliveryHtml = '';
         deliveryOptions.forEach((option)=>{
@@ -140,6 +148,7 @@ export function renderOrderSummary(){
         return deliveryHtml;
     }
 
+    // Adding the event listener to each delivery option. If the customer changes, it updates the cart and renders the whole page once again
     document.querySelectorAll('.js-delivery-option')
     .forEach((shippingOption)=>{
         shippingOption.addEventListener("click", ()=>{

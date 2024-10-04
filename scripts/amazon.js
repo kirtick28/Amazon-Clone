@@ -1,9 +1,10 @@
 import { products } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 
-let amazonHtml = '';
-const prevAddedTimers = {};
+let amazonHtml = ''; // String to store the Html content
+const prevAddedTimers = {}; // This object is used to keep track of previously added timers using displayAdded() function
 
+// Generating the Html to list the products
 products.forEach((product) => {
     amazonHtml += `
         <div class="product-container">
@@ -61,6 +62,7 @@ products.forEach((product) => {
 
 document.querySelector('.js-product-grid').innerHTML = amazonHtml;
 
+// Adding event listener to add to cart button
 document.querySelectorAll('.js-add-to-cart')
 .forEach((button) => {
     button.addEventListener("click", () =>{
@@ -72,6 +74,7 @@ document.querySelectorAll('.js-add-to-cart')
     })
 })
 
+// Used to display the 'Added' when we click the add to cart which lasts for 2 second 
 function displayAdded(productId){
     const added =  document.querySelector(`.js-added-to-cart-${productId}`);
     added.classList.add('js-visible');
@@ -85,6 +88,8 @@ function displayAdded(productId){
     prevAddedTimers[productId] = currTimer;
 }
 
+
+// Updates the cart quantity in the amazon.html page
 function updateCartQuantity(){  
     document.querySelector('.cart-quantity').innerHTML = cart.calculateCartQuantity();
 }

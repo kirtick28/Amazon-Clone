@@ -1,5 +1,6 @@
 import { formatCurrency } from "../scripts/utils/money.js";
 
+// Used to Get the product
 export function getProduct(productId){
   let matchingProduct;
   products.forEach(product => {
@@ -10,6 +11,7 @@ export function getProduct(productId){
   return matchingProduct;
 }
 
+// Product class - Parent Class
 class Product{
   id;
   image;
@@ -17,6 +19,7 @@ class Product{
   rating;
   priceCents;
 
+  // Constructor which initializes the properties of Product
   constructor(productDetails){
     this.id = productDetails.id;
     this.image = productDetails.image;
@@ -25,28 +28,38 @@ class Product{
     this.priceCents = productDetails.priceCents;
   }
 
+  // Used to get the stars url
   getStarsURl(){
     return `images/ratings/rating-${this.rating.stars*10}.png`
   }
 
+  // Used to get the rating count
   getRatingCount(){
     return this.rating.count;
   }
+
+  // Used to get the formatted price
   getPrice(){
     return `$${formatCurrency(this.priceCents)}`
   }
+
+  // Extra info of this class
   extraInfoHtml(){
     return '';
   }
 }
 
+// Derived class from product 
 class Clothing extends Product{
   sizeChartLink;
   
+  // Constructor which initializes the sizeChartLink and also calls the super (parent) class constructor as well
   constructor(productDetails){
     super(productDetails);
     this.sizeChartLink = productDetails.sizeChartLink;
   }
+
+  // Overrided method - Extra info of this class
   extraInfoHtml(){
     return `
     <a href="${this.sizeChartLink}" target="_blank">Size Chart</a>
@@ -54,15 +67,19 @@ class Clothing extends Product{
   }
 }
 
+// Another derived class from product
 class Appliance extends Product{
   instructionsLink;
   warrantyLink;
+
+  // Constructor which initializes the instructionsLink, warrantyLink and also calls the super (parent) class constructor as well
   constructor(productDetails){
     super(productDetails);
     this.instructionsLink = productDetails.instructionsLink;
     this.warrantyLink = productDetails.warrantyLink;
   }
 
+  // overrided method - Extra info of this class
   extraInfoHtml(){
     return `
       <a href="${this.instructionsLink}" target="_blank">Instructions</a>
@@ -71,6 +88,7 @@ class Appliance extends Product{
   }
 }
 
+// Creation of list of objects using map which returns the object of the corresponding items's type
 export const products = [
   {
     id: "e43638ce-6aa0-4b85-b27f-e1d07eb678c6",
