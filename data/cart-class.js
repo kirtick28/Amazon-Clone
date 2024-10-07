@@ -93,7 +93,6 @@ export function loadCart(render){
   
     xhr.addEventListener('load', ()=>{
         console.log(xhr.response);
-
         render();
     });
   
