@@ -5,9 +5,12 @@ let amazonHtml = ''; // String to store the Html content
 const prevAddedTimers = {}; // This object is used to keep track of previously added timers using displayAdded() function
 
 // loadProducts(renderMainPage);
-loadProductsFetch().then(()=>{
+
+async function render(){
+    await loadProductsFetch();
     renderMainPage();
-})
+}
+render();
 
 function renderMainPage(){
     // Generating the Html to list the products

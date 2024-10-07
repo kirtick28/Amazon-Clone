@@ -88,14 +88,21 @@ class Cart{
 //New cart which holds the cart Items and its methods
 export const cart = new Cart('cart-oop');
 
-export function loadCart(render){
-    const xhr = new XMLHttpRequest();
+// export function loadCart(render){
+//     const xhr = new XMLHttpRequest();
   
-    xhr.addEventListener('load', ()=>{
-        console.log(xhr.response);
-        render();
-    });
+//     xhr.addEventListener('load', ()=>{
+//         console.log(xhr.response);
+//         render();
+//     });
   
-    xhr.open('GET','https://supersimplebackend.dev/cart');
-    xhr.send();
+//     xhr.open('GET','https://supersimplebackend.dev/cart');
+//     xhr.send();
+// }
+
+export async function loadCart(){
+    await fetch('https://supersimplebackend.dev/cart')
+    .then((response)=>{
+        console.log(response);
+    })
 }
