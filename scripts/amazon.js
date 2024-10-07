@@ -1,10 +1,13 @@
-import { products, loadProducts } from "../data/products.js";
+import { products, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
 
 let amazonHtml = ''; // String to store the Html content
 const prevAddedTimers = {}; // This object is used to keep track of previously added timers using displayAdded() function
 
-loadProducts(renderMainPage);
+// loadProducts(renderMainPage);
+loadProductsFetch().then(()=>{
+    renderMainPage();
+})
 
 function renderMainPage(){
     // Generating the Html to list the products
