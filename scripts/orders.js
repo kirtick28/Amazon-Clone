@@ -2,7 +2,6 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { orders } from '../data/orders.js';
 import { getProduct,loadProductsFetch } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
-import { getDeliveryOption, calculateDeliveryDate } from '../data/deliveryOptions.js';
 
 async function loadOrderPage(){
     await loadProductsFetch();
@@ -30,18 +29,17 @@ async function loadOrderPage(){
                 </div>
 
                 <div class="order-details-grid">
-                    ${productsListHtml(order,order.orderTime)}                
+                    ${productsListHtml(order)}                
                 </div>
             </div>
         `;
     });
 
-    function productsListHtml(order,orderDate){
-        const productDetailsHtml = '';
+    function productsListHtml(order){
+        let productDetailsHtml = '';
         
         order.products.forEach((productDetails)=>{
-            const matchingProduct = getProduct(productDetails.productId);
-            const delOption = getDeliveryOption(productDetails.deliveryOptionId);
+            const matchingProduct =  getProduct(productDetails.productId);
             productDetailsHtml +=`
                 <div class="product-image-container">
                     <img src="${matchingProduct.image}">
@@ -52,10 +50,10 @@ async function loadOrderPage(){
                     ${matchingProduct.name}
                     </div>
                     <div class="product-delivery-date">
-                    Arriving on: ${calculateDeliveryDate(delOption,orderDate)}
+                    Arriving on: ${dayjs(productDetails.estimatedDeliveryTime).format('MMMM DD')}
                     </div>
                     <div class="product-quantity">
-                    Quantity: ${product.quantity}
+                    Quantity: ${productDetails.quantity}
                     </div>
                     <button class="buy-again-button button-primary">
                     <img class="buy-again-icon" src="images/icons/buy-again.png">
@@ -64,14 +62,15 @@ async function loadOrderPage(){
                 </div>
 
                 <div class="product-actions">
-                    <a href="tracking.html">
+                    <a href="tracking.html?
+                    orderId=${order.id}&productId=${matchingProduct.id}">
                     <button class="track-package-button button-secondary">
                         Track package
                     </button>
                     </a>
                 </div>
             `;
-        })
+        });
         return productDetailsHtml;
     }
     document.querySelector('.js-orders-grid').innerHTML = ordersHtml;
