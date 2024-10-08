@@ -1,3 +1,4 @@
+import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { cart } from '../../data/cart-class.js';
 import { getProduct } from '../../data/products.js';
 import { getDeliveryOption , deliveryOptions} from '../../data/deliveryOptions.js';
@@ -17,7 +18,7 @@ export function renderOrderSummary(){
         checkoutHtml += `
         <div class="cart-item-container js-cart-item-container-${productId}">
             <div class="delivery-date">
-                Delivery date: ${calculateDeliveryDate(matchingOption)}
+                Delivery date: ${calculateDeliveryDate(matchingOption,dayjs())}
             </div>
 
             <div class="cart-item-details-grid">
@@ -127,7 +128,7 @@ export function renderOrderSummary(){
         let deliveryHtml = '';
         deliveryOptions.forEach((option)=>{
             const price = option.priceCents == 0 ? 'FREE' : `$${formatCurrency(option.priceCents)} -`;
-            const deliveryDate = calculateDeliveryDate(option);
+            const deliveryDate = calculateDeliveryDate(option,dayjs());
             const isChecked = cartItem.deliveryOptionId == option.id ? 'checked' : '';
             deliveryHtml += `
             <div class="delivery-option js-delivery-option" data-product-id=${productId} data-delivery-option-id=${option.id}>

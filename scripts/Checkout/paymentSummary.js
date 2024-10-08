@@ -61,7 +61,7 @@ export function renderPaymentSummary(){
                     'Content-Type':'application/json'
                 },
                 body : JSON.stringify({
-                    cart: cart
+                    cart: cart.cartItems
                 })
             });
             const order = await response.json();
@@ -69,7 +69,7 @@ export function renderPaymentSummary(){
         }catch(error){
             console.log('Unexpected error. Please try again later');
         }
-        window.location.href = 'orders.html';
+        // window.location.href = 'orders.html';
     });
 
 }

@@ -37,8 +37,8 @@ function isWeekend(date){
 }
 
 // Calculates the Delivery Date according to the delivery Option
-export function calculateDeliveryDate(deliveryOption){
-    let date = dayjs();
+export function calculateDeliveryDate(deliveryOption, currDate){
+    let date = dayjs(currDate);
     let numberOfDays = deliveryOption.deliveryDays;
     let i=0;
     while(i<numberOfDays){
