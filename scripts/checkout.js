@@ -5,8 +5,10 @@ import { loadCartFetch } from "../data/cart-class.js";
 
 async function loadPage(){
     try{
-        await loadProductsFetch();
-        await loadCartFetch();
+        await Promise.all([
+            loadProductsFetch(),
+            loadCartFetch()
+        ])
         renderOrderSummary();
         renderPaymentSummary();
     }
