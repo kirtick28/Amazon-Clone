@@ -95,12 +95,15 @@ export let products = [];
 
 export async function loadProductsFetch(){
   let productsData;
+  
   try{
     const response = await fetch('https://supersimplebackend.dev/products/');
     productsData = await response.json()
-  }catch(error){
+  }
+  catch(error){
     console.error('Failed to load Products: ',error);
   }
+
   products = productsData.map((productDetails) =>{
     if(productDetails.type === 'clothing'){
       return new Clothing(productDetails);
@@ -113,7 +116,7 @@ export async function loadProductsFetch(){
   console.log('Products loaded successfully');
 }
   
-
+/*
 export function loadProducts(func){
   const xhr = new XMLHttpRequest();
 
@@ -137,4 +140,4 @@ export function loadProducts(func){
   xhr.open('GET','https://supersimplebackend.dev/products/');
   xhr.send();
 }
-
+*/

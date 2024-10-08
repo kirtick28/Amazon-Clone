@@ -88,21 +88,28 @@ class Cart{
 //New cart which holds the cart Items and its methods
 export const cart = new Cart('cart-oop');
 
-// export function loadCart(render){
-//     const xhr = new XMLHttpRequest();
-  
-//     xhr.addEventListener('load', ()=>{
-//         console.log(xhr.response);
-//         render();
-//     });
-  
-//     xhr.open('GET','https://supersimplebackend.dev/cart');
-//     xhr.send();
-// }
-
-export async function loadCart(){
-    await fetch('https://supersimplebackend.dev/cart')
-    .then((response)=>{
-        console.log(response);
-    })
+export async function loadCartFetch(){
+    try{
+        const response = await fetch('https://supersimplebackend.dev/cart');
+        const text = await response.text();
+        console.log(text);
+        return text;
+    }
+    catch(error){
+        console.log("Unexpected Error. Please try again later");
+    }
 }
+
+/*
+export function loadCart(render){
+    const xhr = new XMLHttpRequest();
+  
+    xhr.addEventListener('load', ()=>{
+        console.log(xhr.response);
+        render();
+    });
+  
+    xhr.open('GET','https://supersimplebackend.dev/cart');
+    xhr.send();
+}
+*/
