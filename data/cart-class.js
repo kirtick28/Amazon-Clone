@@ -31,7 +31,6 @@ class Cart{
 
     // Adds the selected product to the cart or updates its quantity if it already exists
     addToCart(productId){
-        const deliveryOptionId = "1";
         const quantity = Number(document.querySelector(`.js-product-quantity-${productId}`).value);
         let matchingProduct = this.findItem(productId);
         if(matchingProduct){
@@ -41,7 +40,7 @@ class Cart{
             this.cartItems.push({
                 productId,
                 quantity,
-                deliveryOptionId
+                deliveryOptionId : "1"
             });
         }
         this.saveToLocal();
@@ -81,6 +80,11 @@ class Cart{
     updateDeliveryOptionId(productId,deliveryOptionId){
         const matchingProduct = this.findItem(productId);
         matchingProduct.deliveryOptionId = deliveryOptionId;
+        this.saveToLocal();
+    }
+
+    clearCart(){
+        this.cartItems = [];
         this.saveToLocal();
     }
 }
