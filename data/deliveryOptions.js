@@ -40,13 +40,13 @@ function isWeekend(date){
 export function calculateDeliveryDate(deliveryOption, currDate){
     let date = dayjs(currDate);
     let numberOfDays = deliveryOption.deliveryDays;
-    let i=0;
-    while(i<numberOfDays){
-        date = date.add(1,'days');
-        if(isWeekend(date)){
-            continue;
-        }
-        i+=1;
-    }
-    return date.format('dddd, MMMM D');
+    // let i=0;
+    // while(i<numberOfDays){
+    //     date = date.add(1,'days');
+    //     if(isWeekend(date)){
+    //         continue;
+    //     }
+    //     i+=1;
+    // }
+    return date.add(numberOfDays,'days').format('dddd, MMMM D');
 }
