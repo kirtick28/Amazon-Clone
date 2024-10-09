@@ -18,6 +18,11 @@ async function loadTrackingPage(){
             productDetails=prod;
     });
     
+    const today = dayjs();
+    const orderTime = dayjs(matchingOrder.orderTime);
+    const deliveryTime = dayjs(productDetails.estimatedDeliveryTime);
+    let progress = ((today - orderTime)/(deliveryTime - orderTime))*100;
+    
     let trackingHtml = `  
         <a class="back-to-orders-link link-primary" href="orders.html">
             View all orders
@@ -37,19 +42,25 @@ async function loadTrackingPage(){
         <img class="product-image" src="${matchingProduct.image}">
 
         <div class="progress-labels-container">
-            <div class="progress-label">
+            <div class="progress-label ${
+                progress<50 ? 'current-status' : ''
+            }">
                 Preparing
             </div>
-            <div class="progress-label current-status">
+            <div class="progress-label ${
+                (progress>=50 && progress<100) ? 'current-status' : ''
+            }">
                 Shipped
             </div>
-            <div class="progress-label">
+            <div class="progress-label ${
+                progress>=100 ? 'current-status' : ''
+            }">
                 Delivered
             </div>
         </div>
 
         <div class="progress-bar-container">
-            <div class="progress-bar"></div>
+            <div class="progress-bar" style="width: ${progress}%"></div>
         </div>
     `;
 
