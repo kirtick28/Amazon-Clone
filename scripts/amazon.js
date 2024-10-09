@@ -76,8 +76,9 @@ function renderMainPage(){
     .forEach((button) => {
         button.addEventListener("click", () =>{
             const productId = button.dataset.productId;
+            const quantity = Number(document.querySelector(`.js-product-quantity-${productId}`).value);
             displayAdded(productId);
-            cart.addToCart(productId);
+            cart.addToCart(productId,quantity);
             updateCartQuantity();
             cart.saveToLocal();
         })

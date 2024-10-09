@@ -2,6 +2,7 @@ import dayjs from 'https://unpkg.com/dayjs@1.11.10/esm/index.js';
 import { orders } from '../data/orders.js';
 import { getProduct,loadProductsFetch } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
+import { cart } from '../data/cart-class.js';
 
 async function loadOrderPage(){
     await loadProductsFetch();
@@ -57,7 +58,7 @@ async function loadOrderPage(){
                     </div>
                     <button class="buy-again-button button-primary">
                     <img class="buy-again-icon" src="images/icons/buy-again.png">
-                    <span class="buy-again-message">Buy it again</span>
+                    <span class="buy-again-message js-buy-it-again" data-product-id=${productDetails.productId}>Buy it again</span>
                     </button>
                 </div>
 
@@ -74,6 +75,21 @@ async function loadOrderPage(){
         return productDetailsHtml;
     }
     document.querySelector('.js-orders-grid').innerHTML = ordersHtml;
+    
+    document.querySelectorAll('.js-buy-it-again')
+    .forEach((button)=>{
+            button.addEventListener('click',()=>{
+            const productId = button.dataset.productId;
+            cart.addToCart(productId,1);
+            updateHeaderCart();
+        })
+    })
+
+    function updateHeaderCart(){
+        const quantity = cart.calculateCartQuantity();
+        document.querySelector('.js-order-cart-quantity').innerHTML = quantity;
+    }
+    updateHeaderCart();
 }
 
 loadOrderPage();
