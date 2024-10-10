@@ -14,7 +14,18 @@ render();
 
 function renderMainPage(){
     // Generating the Html to list the products
-    products.forEach((product) => {
+    const url =  new URL(window.location.href);
+    const search = url.searchParams.get('search');
+    document.querySelector('.js-search-bar').value = search;
+    let filteredProducts = products;
+
+    if(search){
+        filteredProducts = products.filter((product)=>{
+            return (product.name).toLowerCase().includes(search.toLowerCase());
+        });
+    }
+
+    filteredProducts.forEach((product) => {
         amazonHtml += `
             <div class="product-container">
                 <div class="product-image-container">
@@ -103,6 +114,23 @@ function renderMainPage(){
     function updateCartQuantity(){  
         document.querySelector('.cart-quantity').innerHTML = cart.calculateCartQuantity();
     }
+
+    function searching(){
+        const search = document.querySelector('.js-search-bar').value;
+        window.location.href = `amazon.html?search=${search}`;
+    }
+
+    document.querySelector('.js-search-button')
+    .addEventListener('click',()=>{
+        searching();
+    })
+
+    document.querySelector('.js-search-bar')
+    .addEventListener(('keyup'),(event)=>{
+        if(event.key === 'Enter'){
+            searching();
+        }
+    })
 
     updateCartQuantity();
 }
