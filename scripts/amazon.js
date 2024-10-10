@@ -16,13 +16,14 @@ render();
 function renderMainPage(){
     // Generating the Html to list the products
     const url =  new URL(window.location.href);
-    const search = url.searchParams.get('search');
+    let search = url.searchParams.get('search');
     document.querySelector('.js-search-bar').value = search;
     let filteredProducts = products;
 
     if(search){
         filteredProducts = products.filter((product)=>{
-            return (product.name).toLowerCase().includes(search.toLowerCase());
+            search = search.toLowerCase();
+            return product.name.toLowerCase().includes(search);
         });
     }
 
@@ -117,7 +118,7 @@ function renderMainPage(){
     }
 
     searchProduct();
-    
+
     updateCartQuantity();
 }
 
