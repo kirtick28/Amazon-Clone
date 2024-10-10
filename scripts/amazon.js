@@ -1,5 +1,6 @@
 import { products, loadProductsFetch } from "../data/products.js";
 import { cart } from "../data/cart-class.js";
+import { searchProduct } from "./utils/searchProduct.js";
 
 let amazonHtml = ''; // String to store the Html content
 const prevAddedTimers = {}; // This object is used to keep track of previously added timers using displayAdded() function
@@ -115,22 +116,9 @@ function renderMainPage(){
         document.querySelector('.cart-quantity').innerHTML = cart.calculateCartQuantity();
     }
 
-    function searching(){
-        const search = document.querySelector('.js-search-bar').value;
-        window.location.href = `amazon.html?search=${search}`;
-    }
-
-    document.querySelector('.js-search-button')
-    .addEventListener('click',()=>{
-        searching();
-    })
-
-    document.querySelector('.js-search-bar')
-    .addEventListener(('keyup'),(event)=>{
-        if(event.key === 'Enter'){
-            searching();
-        }
-    })
-
+    searchProduct();
+    
     updateCartQuantity();
 }
+
+

@@ -3,6 +3,7 @@ import { orders } from '../data/orders.js';
 import { getProduct,loadProductsFetch } from '../data/products.js';
 import { formatCurrency } from './utils/money.js';
 import { cart } from '../data/cart-class.js';
+import { searchProduct } from './utils/searchProduct.js';
 
 async function loadOrderPage(){
     await loadProductsFetch();
@@ -88,6 +89,9 @@ async function loadOrderPage(){
         const quantity = cart.calculateCartQuantity();
         document.querySelector('.js-order-cart-quantity').innerHTML = quantity;
     }
+
+    searchProduct();
+
     updateHeaderCart();
 }
 
