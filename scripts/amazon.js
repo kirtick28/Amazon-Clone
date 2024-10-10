@@ -112,7 +112,7 @@ function renderMainPage(){
     }
 
 
-    // Updates the cart quantity in the amazon.html page
+    // Updates the cart quantity in the index.html page
     function updateCartQuantity(){  
         document.querySelector('.cart-quantity').innerHTML = cart.calculateCartQuantity();
     }

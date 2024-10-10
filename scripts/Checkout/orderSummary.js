@@ -166,7 +166,7 @@ export function renderOrderSummary(){
         `;
         document.querySelector('.order-summary').innerHTML = checkoutHtml;
         document.querySelector('.view-products-link').addEventListener('click',()=>{
-            window.location.href = 'amazon.html';
+            window.location.href = 'index.html';
         })
     }
     renderCheckoutHeader();
